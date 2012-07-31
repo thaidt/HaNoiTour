@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">HaNoiTours</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="Satelline">Satelline</string>
+    <string name="Traffic">Traffic</string>
+    <string name="title_activity_place_detail">PlaceDetail</string>
+    <string name="location">M</string>
+    <string name="place_name">place_name</string>
+    <string name="search">Search</string>
+    <string name ="welcome">Welcome</string>
+    
+</resources>
