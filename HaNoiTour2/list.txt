@@ -1,0 +1,6 @@
+json
+http reqest
+asynctask
+http://hanoitour.herokuapp.com/
+http://hanoitour.herokuapp.com/places.json
+http://hanoitour.herokuapp.com/places/addr_id.json
