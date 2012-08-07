@@ -1,5 +1,7 @@
 package com.draw;
 
+import java.util.ArrayList;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -29,20 +31,42 @@ public class MainActivity extends MapActivity {
         //two points
         GeoPoint point1= new GeoPoint(19240000,-99120000);
         GeoPoint point2 = new GeoPoint(19241000,-99121000);
+        GeoPoint point3 = new GeoPoint(19245000,-99121000);
+        GeoPoint point4 = new GeoPoint(19241000,-99125000);
+        
+        ArrayList<GeoPoint> listGeo = new ArrayList<GeoPoint>();
+        listGeo.add(point1);
+        listGeo.add(point2);
+        listGeo.add(point3);
+        listGeo.add(point4);
+        
         mMapController.setCenter(point1);
         //Pass the geoPoints to the overlay class
-        MapOverlay mapOverlay= new MapOverlay (point1,point2);
-        mapView.getOverlays().add(mapOverlay);
+        //MapOverlay mapOverlay[] = new MapOverlay [4];
+        
+        /*for(int i=0;i<number-1;i++){
+        	mapOverlay[i] = new MapOverlay (listGeo.get(i),listGeo.get(i+1));
+        	mapView.getOverlays().add(mapOverlay[i]);
+        }*/
+        MapOverlay mapOverlay1 = new MapOverlay(listGeo);
+        mapView.getOverlays().add(mapOverlay1);
         
     }
     ///////////////////////////////////////////////////////
     public class MapOverlay extends com.google.android.maps.Overlay{
     	private GeoPoint mGpt1;
     	private GeoPoint mgpt2;
+    	private GeoPoint myGeoPoint [];
     	public MapOverlay(GeoPoint gp1, GeoPoint gp2){
     		mGpt1=gp1;
     		mgpt2=gp2;
+    	}
+    	public MapOverlay(ArrayList<GeoPoint> listGeoPoints){
     		
+    		myGeoPoint= new GeoPoint [listGeoPoints.size()];
+    		for (int i=0;i<listGeoPoints.size();i++){
+    			myGeoPoint[i]=listGeoPoints.get(i);
+    		}
     	}
     	
     	public boolean draw(Canvas canvas, MapView mapView,boolean shadow,long when){
@@ -52,13 +76,25 @@ public class MainActivity extends MapActivity {
     		paint.setColor(Color.RED);
     		paint.setAntiAlias(true);
     		paint.setStyle(Style.STROKE);
-    		paint.setStrokeWidth(2);
-    		Point pt1 = new Point();
-    		Point pt2 = new Point();
+    		paint.setStrokeWidth(3);
+    		
+    		//Point pt1 = new Point();
+    		//Point pt2 = new Point();
+    		
+    		Point listPoints [] = new Point[myGeoPoint.length];
+    		for(int i=0;i<myGeoPoint.length;i++){
+    			listPoints[i] = new Point();
+    		}
     		Projection projection = mapView.getProjection();
-    		projection.toPixels(mGpt1, pt1);
-    		projection.toPixels(mgpt2, pt2);
-    		canvas.drawLine(pt1.x, pt1.y, pt2.x, pt2.y, paint);
+    		//projection.toPixels(mGpt1, pt1);
+    		//projection.toPixels(mgpt2, pt2);
+    		for(int i=0;i<myGeoPoint.length;i++){
+    			projection.toPixels(myGeoPoint[i], listPoints[i]);
+    		}
+    		for(int i=0;i<myGeoPoint.length-1;i++){
+    			canvas.drawLine(listPoints[i].x, listPoints[i].y, listPoints[i+1].x, listPoints[i+1].y, paint);
+    		}
+    		//canvas.drawLine(pt1.x, pt1.y, pt2.x, pt2.y, paint);
     		return true;
     	}
     }
